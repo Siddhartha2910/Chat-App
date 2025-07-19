@@ -1,21 +1,21 @@
+// Backend/index.js
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRoutes from "./routes/auth.route.js";
-import messageRoutes from "./routes/message.route.js";
+// import authRoutes from "./routes/auth.route.js"; // COMMENT THIS OUT
+// import messageRoutes from "./routes/message.route.js"; // COMMENT THIS OUT
 import { connectDB } from "./lib/db.js";
-// import {app,server} from "./lib/socket.js"; // <-- REMOVE THIS LINE
-import { initSocketServer } from "./lib/socket.js"; // <-- ADD THIS LINE
+import { initSocketServer } from "./lib/socket.js";
 import path from "path";
-import http from "http"; // <-- ADD THIS LINE to create the server here
+import http from "http";
 
 dotenv.config();
 
-const app = express(); // <-- CREATE THE EXPRESS APP HERE, ONCE
-const server = http.createServer(app); // <-- CREATE THE HTTP SERVER HERE, ONCE
+const app = express();
+const server = http.createServer(app);
 
-const PORT = process.env.PORT || 5000; // Provide a default port
+const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
@@ -28,11 +28,9 @@ app.use(cors({
     credentials: true
 }));
 
-// Your API routes
-app.use("/api/auth", authRoutes);
-app.use("/api/messages", messageRoutes);
+// app.use("/api/auth", authRoutes); // COMMENT THIS OUT
+// app.use("/api/messages", messageRoutes); // COMMENT THIS OUT
 
-// Serve static frontend in production
 if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../Frontend/dist")));
     app.get("*", (req, res) => {
@@ -40,8 +38,7 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 
-// Initialize Socket.IO with the SAME server instance
-initSocketServer(server); // <-- Pass the server instance to socket.js
+initSocketServer(server);
 
 server.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
