@@ -5,13 +5,11 @@ import dotenv from "dotenv";
 import http from "http";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import authRoutes from "./routes/auth.route.js"; // UNCOMMENT THIS
-// Keep messageRoutes commented out for now
-// import messageRoutes from "./routes/message.route.js";
+import authRoutes from "./routes/auth.route.js";
+import messageRoutes from "./routes/message.route.js"; // UNCOMMENT THIS
 import { connectDB } from "./lib/db.js";
 import { initSocketServer } from "./lib/socket.js";
-// Keep path commented out for now
-// import path from "path";
+import path from "path"; // UNCOMMENT THIS, as it will be needed for the static files if this passes
 
 dotenv.config();
 
@@ -20,8 +18,7 @@ const server = http.createServer(app);
 
 const PORT = process.env.PORT || 5000;
 
-// Keep __dirname commented out if not used by anything else yet
-// const __dirname = path.resolve();
+const __dirname = path.resolve(); // UNCOMMENT THIS, as it will be needed for the static files if this passes
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -31,11 +28,10 @@ app.use(cors({
     credentials: true
 }));
 
-// Uncomment authRoutes
-app.use("/api/auth", authRoutes); // UNCOMMENT THIS
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes); // UNCOMMENT THIS
 
-// Keep other route-related app.use and app.get calls commented out
-// app.use("/api/messages", messageRoutes);
+// Keep the production static file serving block commented out for now
 // if (process.env.NODE_ENV === "production") {
 //     app.use(express.static(path.join(__dirname, "../Frontend/dist")));
 //     app.get("*", (req, res) => {
