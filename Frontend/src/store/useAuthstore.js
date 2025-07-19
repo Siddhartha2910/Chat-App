@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {axiosInstance} from '../lib/axios';
+import {axiosInstance} from '../lib/axios.js';
 import toast from 'react-hot-toast';
 import { io } from "socket.io-client";
 
@@ -42,7 +42,7 @@ export const useAuthStore = create((set,get) => ({
     }
   },
 
-    login: async (data) => {
+  login: async (data) => {
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);

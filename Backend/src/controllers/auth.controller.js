@@ -80,7 +80,7 @@ export const login =async (req, res) => {
             email: user.email,
             fullName: user.fullName,
             profilepic: user.profilepic,
-        })
+        });
 
     }catch(error){
         consolw.log("Error in login: ", error.message);
