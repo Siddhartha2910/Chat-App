@@ -2,11 +2,11 @@
 
 import express from "express";
 import dotenv from "dotenv";
-import http from "http"; // Ensure http is imported
+import http from "http";
+import cookieParser from "cookie-parser"; // UNCOMMENT THIS
+import cors from "cors"; // UNCOMMENT THIS
 
-// Comment out all other imports for this test
-// import cookieParser from "cookie-parser";
-// import cors from "cors";
+// Keep other imports commented out for now
 // import authRoutes from "./routes/auth.route.js";
 // import messageRoutes from "./routes/message.route.js";
 // import { connectDB } from "./lib/db.js";
@@ -16,18 +16,20 @@ import http from "http"; // Ensure http is imported
 dotenv.config();
 
 const app = express();
-const server = http.createServer(app); // Create the server
+const server = http.createServer(app);
 
-const PORT = process.env.PORT || 5000; // Define a port
+const PORT = process.env.PORT || 5000;
 
-// Comment out all app.use and app.get calls
-// app.use(express.json({ limit: '10mb' }));
-// app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-// app.use(cookieParser());
-// app.use(cors({
-//     origin: "http://localhost:5173",
-//     credentials: true
-// }));
+// Uncomment these middleware lines
+app.use(express.json({ limit: '10mb' })); // UNCOMMENT THIS
+app.use(express.urlencoded({ extended: true, limit: '10mb' })); // UNCOMMENT THIS
+app.use(cookieParser()); // UNCOMMENT THIS
+app.use(cors({ // UNCOMMENT THIS
+    origin: "http://localhost:5173",
+    credentials: true
+})); // UNCOMMENT THIS
+
+// Keep all route-related app.use and app.get calls commented out
 // app.use("/api/auth", authRoutes);
 // app.use("/api/messages", messageRoutes);
 // if (process.env.NODE_ENV === "production") {
@@ -37,11 +39,10 @@ const PORT = process.env.PORT || 5000; // Define a port
 //     });
 // }
 
-// Comment out initSocketServer and connectDB calls
+// Keep initSocketServer and connectDB calls commented out
 // initSocketServer(server);
-// connectDB(); // This would be called inside server.listen in your original code
+// connectDB();
 
 server.listen(PORT, () => {
     console.log(`Minimal server is running on port: ${PORT}`);
-    // No connectDB or socket.io init here for this test
 });
