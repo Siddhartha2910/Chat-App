@@ -5,11 +5,11 @@ import dotenv from "dotenv";
 import http from "http";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-// Keep authRoutes and messageRoutes commented out
-// import authRoutes from "./routes/auth.route.js";
+import authRoutes from "./routes/auth.route.js"; // UNCOMMENT THIS
+// Keep messageRoutes commented out for now
 // import messageRoutes from "./routes/message.route.js";
-import { connectDB } from "./lib/db.js"; // UNCOMMENT THIS
-import { initSocketServer } from "./lib/socket.js"; // UNCOMMENT THIS
+import { connectDB } from "./lib/db.js";
+import { initSocketServer } from "./lib/socket.js";
 // Keep path commented out for now
 // import path from "path";
 
@@ -31,8 +31,10 @@ app.use(cors({
     credentials: true
 }));
 
-// Keep all route-related app.use and app.get calls commented out
-// app.use("/api/auth", authRoutes);
+// Uncomment authRoutes
+app.use("/api/auth", authRoutes); // UNCOMMENT THIS
+
+// Keep other route-related app.use and app.get calls commented out
 // app.use("/api/messages", messageRoutes);
 // if (process.env.NODE_ENV === "production") {
 //     app.use(express.static(path.join(__dirname, "../Frontend/dist")));
@@ -41,11 +43,9 @@ app.use(cors({
 //     });
 // }
 
-// Uncomment these two lines
-initSocketServer(server); // UNCOMMENT THIS
-// connectDB(); // This was originally inside server.listen, let's put it back there
+initSocketServer(server);
 
 server.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
-    connectDB(); // UNCOMMENT THIS (put it back where it was)
+    connectDB();
 });
